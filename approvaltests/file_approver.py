@@ -1,6 +1,6 @@
 import filecmp
 import os
-import pathlib
+import pathlib2 as pathlib
 
 
 def exists(path):

@@ -1,11 +1,17 @@
+import os
 import re
-from pathlib import Path
 
 from setuptools import setup, find_packages
 
-HERE = Path(__file__).parent
-_version_file_contents = (HERE / 'approvaltests' / 'version.py').read_text()
-VERSION = re.search(r'"(.*)"', _version_file_contents).group(1)
+
+def read_text(*path_parts):
+    here = os.path.dirname(__file__)
+    with open(os.path.join(here, *path_parts)) as f:
+        return f.read()
+
+
+VERSION = re.search(r'"(.*)"', read_text("approvaltests", "version.py")).group(1)
+
 
 setup(
     name='approvaltests',
@@ -14,11 +20,10 @@ setup(
     author='ApprovalTests Contributors',
     author_email='jamesrcounts@outlook.com',
     url='https://github.com/approvals/ApprovalTests.Python',
-    python_requires='>=3.6.1',
     packages=find_packages(exclude=['tests*']),
     package_data={'approvaltests': ['reporters/reporters.json']},
-    install_requires=['pyperclip==1.5.27', 'pytest'],
-    long_description=(HERE / 'README.md').read_text(),
+    install_requires=['pyperclip==1.5.27', 'pathlib2', 'pytest'],
+    long_description=read_text('README.md'),
     long_description_content_type='text/markdown',
     classifiers=[
         "Development Status :: 4 - Beta",
